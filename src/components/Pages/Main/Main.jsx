@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react';
 import Banner from '../../Banner/Banner';
 import styles from './main.module.css';
-import { getNews } from './../../../api/apiNews';
+import { getCategories, getNews } from './../../../api/apiNews';
 import NewsList from './../../NewsList/NewsList';
 import Skeleton from '../../Skeleton/Skeleton';
 import Pagination from './../../Pagination/Pagination';
+import Categories from '../../Categories/Categories';
 
 const Main = () => {
 
     const [news, setNews] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('all');
 
     const totalPages = 10;
     const pageSize = 10;
@@ -21,7 +24,11 @@ const Main = () => {
         const fetchNews = async () => {
             try {
                 setIsLoading(true);
-                const response = await getNews(currentPage, pageSize);
+                const response = await getNews({
+                    page_number: currentPage,
+                    page_size: pageSize,
+                    category: selectedCategory === 'all' ? null : selectedCategory
+                });
                 // response = [{}, {}, {},{}...]
                 setNews(response);
                 setIsLoading(false);
@@ -30,7 +37,21 @@ const Main = () => {
             }
         };
         fetchNews();
-    }, [currentPage]);
+    }, [currentPage, selectedCategory]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await getCategories();
+                // response = [{}, {}, {},{}...]
+                setCategories(["all", ...response]);
+            } catch (error) {
+                console.log(error)
+            }
+        };
+        fetchCategories();
+    }, []);
+
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
@@ -51,6 +72,11 @@ const Main = () => {
 
     return (
         <main className={styles.main}>
+            <Categories
+                categories={categories}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+            />
             {news.length > 0 && !isLoading ? <Banner item={news[0]} /> : <Skeleton count={1} type={'banner'} />}
 
             <Pagination
