@@ -14,7 +14,7 @@ export const getNews = async ({ page_number = 2, page_size = 10, category, keywo
                 keywords
             }
         });
-        return response.data.news;
+        return response.data;
     } catch (error) {
         console.log(error)
     }
@@ -28,7 +28,7 @@ export const getCategories = async () => {
                 apiKey: API_KEY,
             }
         });
-        return response.data.categories;
+        return response.data;
     } catch (error) {
         console.log(error)
     }
