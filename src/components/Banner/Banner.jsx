@@ -1,7 +1,5 @@
-/* eslint-disable react/prop-types */
 import styles from './banner.module.css';
 import { formatTimeAgo } from './../../helpers/formatTimeAgo';
-import withSkeleton from './../../helpers/HOCs/withSkeleton';
 
 const Banner = ({ item }) => {
 
@@ -25,7 +23,5 @@ const Banner = ({ item }) => {
     )
 };
 
-const BannerWithSkeleton = withSkeleton(Banner, 'banner', 1);
 
-
-export default BannerWithSkeleton;
+export default Banner;
