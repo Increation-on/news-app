@@ -4,11 +4,13 @@ import Banner from '../Banner/Banner';
 
 const BannersList = ({ banners }) => {
     return (
-        <ul className={styles.banners}>
-            {banners.map((banner) => (
-                <Banner key={banner.id} item={banner} />
-            ))}
-        </ul>
+        
+            <ul className={styles.banners}>
+                {banners.map((banner) => (
+                    <Banner key={banner.id} item={banner} />
+                ))}
+            </ul>
+
     )
 }
 
