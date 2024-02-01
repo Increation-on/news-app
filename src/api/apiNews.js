@@ -16,10 +16,22 @@ export const getNews = async ({ page_number = 2, page_size = 10, category, keywo
         });
         return response.data;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
 
+export const getLatestNews = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}/latest-news`, {
+            params: {
+                apiKey: API_KEY,
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export const getCategories = async () => {
     try {
@@ -30,6 +42,6 @@ export const getCategories = async () => {
         });
         return response.data;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
